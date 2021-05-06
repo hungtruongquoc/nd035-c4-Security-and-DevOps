@@ -17,10 +17,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Entity
 @Table(name = "user_order")
 public class UserOrder {
+
+	public static final Logger log = LoggerFactory.getLogger(UserOrder.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,6 +83,7 @@ public class UserOrder {
 		order.setItems(cart.getItems().stream().collect(Collectors.toList()));
 		order.setTotal(cart.getTotal());
 		order.setUser(cart.getUser());
+		log.info("Order initialized items={}, total={}", order.getItems().size(), order.getTotal());
 		return order;
 	}
 	
